@@ -34,7 +34,17 @@ typedef struct {
     size_t count;
 } string_splits;
 
-static string_splits split_string(const char *str, size_t len, char split_by) {}
+static string_splits split_string(const char *str, size_t len, char split_by) {
+    string_splits result;
+    result.splits = calloc(sizeof(string_view), 8);
+
+    char *start;
+    char *end;
+    for (size_t i = 0; i < len; ++i) {
+        if (str[i] == split_by) {
+        }
+    }
+}
 
 static void free_splits(string_splits *splits) {
     if (splits) {
