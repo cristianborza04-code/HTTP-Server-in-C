@@ -1,11 +1,63 @@
 #include <arpa/inet.h>
 #include <asm-generic/socket.h>
 #include <stdbool.h>
+#include <stddef.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <sys/socket.h>
 #include <sys/types.h>
 #include <unistd.h>
+
+const char *CRLF = "\r\n";
+const char *SP = " ";
+
+/* Request-Line = Method SP Request-URI SP HTTP-Version CRLF */
+typedef struct {
+    char *method;
+    char *uri;
+    char *version;
+} http_req_line;
+
+typedef enum {
+    HTTP_RES_OK,
+    HTTP_RES_INTERNAL_SERVER_ERR,
+} http_result;
+
+typedef struct {
+    char *start;
+    char *end;
+} string_view;
+
+typedef struct {
+    string_view *splits;
+    size_t count;
+} string_splits;
+
+static string_splits split_string(const char *str, size_t len, char split_by) {}
+
+static void free_splits(string_splits *splits) {
+    if (splits) {
+        free(splits->splits);
+        splits->splits = NULL;
+    }
+}
+
+http_req_line http_req_line_init(void) {
+    http_req_line line;
+    line.method = NULL;
+    line.uri = NULL;
+    line.version = NULL;
+    return line;
+}
+
+http_result parse_req_line(const char *buff, size_t len,
+                           http_req_line *req_line) {
+    if (!buff || !req_line) {
+        return HTTP_RES_INTERNAL_SERVER_ERR;
+    }
+    return HTTP_RES_OK;
+}
 
 int handle_client(int client_socket) {
     ssize_t n = 0;
